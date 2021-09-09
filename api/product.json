@@ -1,0 +1,82 @@
+{
+  "Product":[
+    {
+        "id": "1",
+        "name": "Iphone 7",
+        "Price": "75999",
+        "description": "Apple iPhone 7 is the upcoming mobile from Apple that is expected to be launched in India on July 13, 2020 (Unofficial). The mobile will come with adequate specifications and decent specifications. It is rumored to be available at a starting price of Rs 75,990.",
+        "img": "images/img/iphone7.jpg",
+        "RAM": "4gb",
+        "ROM": "64gb",
+        "camera": "12MP + 12MP",
+        "battery": "3000mAh",
+        "display" : "4.7 inche"
+    },
+    {
+      "id": "2",
+      "name": "Iphone 9",
+      "Price": "79999",
+      "description": "Apple iPhone 9 is the upcoming mobile from Apple that is expected to be launched in India on July 13, 2020 (Unofficial). The mobile will come with adequate specifications and decent specifications. It is rumored to be available at a starting price of Rs 75,990.",
+      "img": "images/img/iphone9.jpg",
+      "RAM": "4gb",
+      "ROM": "128gb",
+      "camera": "32GB + 12MP",
+      "battery": "4000mAh",
+      "display" : "5.0 inche"
+    },
+    {
+      "id": "3",
+      "name": "Redmi Note 10 ",
+      "Price": "12999",
+      "description": "Redmi Note 10 is the upcoming mobile from Xiomii that is expected to be launched in India on July 25, 2021 (Unofficial). The mobile will come with adequate specifications and decent specifications. It is rumored to be available at a starting price of Rs 12,999.",
+      "img": "images/img/redmi9.jpg",
+      "RAM": "6gb",
+      "ROM": "128gb",
+      "camera": "32GB + 12MP",
+      "battery": "5000mAh",
+      "display" : "5.0 inche"
+    },
+    {
+      "id": "4",
+      "name": "Redmi Note 10 pro ",
+      "Price": "15999",
+      "description": "Redmi Note 10 pro is the upcoming mobile from Xiomii that is expected to be launched in India on July 25, 2021 (Unofficial). The mobile will come with adequate specifications and decent specifications. It is rumored to be available at a starting price of Rs 15,999.",
+      "img": "images/img/redmi9A.jpg",
+      "RAM": "8gb",
+      "ROM": "128gb",
+      "camera": "48MP + 12MP + 8MP +2MP",
+      "battery": "5000mAh",
+      "display" : "6.0 inche"
+    },
+    {
+      "id": "5",
+      "name": "Vivo V9 ",
+      "Price": "18,999",
+      "description": "Vivo V9 is the upcoming mobile from Vivo that is expected to be launched in India on July 25, 2021 (Unofficial). The mobile will come with adequate specifications and decent specifications. It is rumored to be available at a starting price of Rs 18,999.",
+      "img": "images/img/vivov9.jpg",
+      "RAM": "8gb",
+      "ROM": "128gb",
+      "camera": "48MP + 12MP + 12MP +2MP",
+      "battery": "5000mAh",
+      "display" : "5.5 inche"
+    }
+  ],
+  "customer":[
+    {
+      "c_id": "1",
+      "c_name":"Zeel Chauhan",
+      "c_email": "zeel123@gmail.com",
+      "c_pass": "Zeel123@",
+      "c_img": "images/customer/customer.jpg",
+      "c_address": "Gheekanta Road , Ahmedabad"
+    },
+    {
+      "c_id": "2",
+      "c_name":"Ram Chauhan",
+      "c_email": "ram123@gmail.com",
+      "c_pass": "Ram123@",
+      "c_img": "images/customer/customer.jpg",
+      "c_address": "Sola Road , Ahmedabad"
+    }
+  ]
+}
