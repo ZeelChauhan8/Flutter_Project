@@ -1,142 +1,132 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'home_page.dart';
+import 'package:project/constants.dart';
+import 'package:project/home_page.dart';
+import 'package:velocity_x/velocity_x.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginPage extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() {
-    return LoginScreen_State();
-  }
+  _LoginPageState createState() => _LoginPageState();
 }
 
-class LoginScreen_State extends State<LoginScreen> {
-  List _cus = [];
-  Future<void> fetch_customer() async {
-    final String json_cus = await rootBundle.loadString("api/product.json");
-    final data = await json.decode(json_cus);
-    setState(() {
-      _cus = data['customer'];
-    });
-  }
+class _LoginPageState extends State<LoginPage> {
+  String name = "";
+  bool changeButton = false;
 
-  void loginverify() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    int count = 0;
-    for (int i = 0; i < _cus.length; i++) {
-      if (uname == _cus[i]['c_email'] && password == _cus[i]['c_pass']) {
-        count = 1;
-        prefs.setString('email', uname);
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text("Welcome  " + _cus[i]['c_name']),
-        ));
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => HomePage()));
-      }
-    }
-    if (count == 0) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text("Invalid Email id or Password"),
-      ));
+  final _formKey = GlobalKey<FormState>();
+
+  moveToHome(BuildContext context) async {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        changeButton = true;
+      });
+      await Future.delayed(Duration(seconds: 1));
+      await Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+      setState(() {
+        changeButton = false;
+      });
     }
   }
 
-  // var a=LinearProgressIndicator(color:Colors.green);
-  bool _mask = true;
-  String uname = "";
-  String password = "";
   @override
   Widget build(BuildContext context) {
-    fetch_customer();
-    return Scaffold(
-      appBar: AppBar(
-        title: Center(
-          child: Text("Login Page"),
-        ),
-        backgroundColor: Colors.green,
-      ),
-      body: Center(
-        child: Container(
-          height: 400.0,
-          width: 400.0,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                  margin: EdgeInsets.all(20),
-                  child: Text(
-                    "Login Screen",
-                    style: TextStyle(
-                        fontFamily: "oswald",
-                        color: Colors.green,
-                        fontSize: 30),
-                  )),
-              Container(
-                margin: EdgeInsets.all(10),
-                child: TextField(
-                  keyboardType: TextInputType.emailAddress,
-                  obscureText: false,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: "Username",
-                      hintText: "Enter Username",
-                      suffixIcon: Icon(Icons.account_circle)),
-                  onChanged: (uname) {
-                    setState(() {
-                      this.uname = uname;
-                    });
-                  },
+    return Material(
+        color: context.canvasColor,
+        child: SingleChildScrollView(
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                Image.asset(
+                  "assets/logo.png",
+                  fit: BoxFit.cover,
                 ),
-              ),
-              Container(
-                margin: EdgeInsets.all(10),
-                child: TextField(
-                  keyboardType: TextInputType.text,
-                  obscureText: _mask,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: "Password",
-                      hintText: "Enter Password",
-                      suffixIcon: IconButton(
-                        splashColor: Colors.green,
-                        icon: Icon(Icons.remove_red_eye),
-                        onPressed: () {
-                          setState(() {
-                            _mask = !_mask;
-                          });
-                        },
-                      )),
-                  onChanged: (val) {
-                    setState(() {
-                      this.password = val;
-                    });
-                  },
+                SizedBox(
+                  height: 20.0,
                 ),
-              ),
-              Container(
-                margin: EdgeInsets.all(20),
-                child: RaisedButton(
-                  padding:
-                      EdgeInsets.only(top: 20, left: 40, right: 40, bottom: 20),
-                  onPressed: loginverify,
-                  color: Colors.green,
-                  child: Text(
-                    "Login",
-                    style: TextStyle(
-                        fontSize: 20,
-                        letterSpacing: 5,
-                        fontFamily: "oswald",
-                        color: Colors.white),
+                Text(
+                  "Welcome $name",
+                  style: TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                    color: kPrimaryColor
                   ),
-                  // color: Colors.blue,
                 ),
-              ),
-            ],
+                SizedBox(
+                  height: 20.0,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 16.0, horizontal: 32.0),
+                  child: Column(
+                    children: [
+                      TextFormField(
+                        decoration: InputDecoration(
+                          hintText: "Enter username",
+                          labelText: "Username",
+                        ),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Username cannot be empty";
+                          }
+
+                          return null;
+                        },
+                        onChanged: (value) {
+                          name = value;
+                          setState(() {});
+                        },
+                      ),
+                      TextFormField(
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          hintText: "Enter password",
+                          labelText: "Password",
+                        ),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Password cannot be empty";
+                          } else if (value.length < 6) {
+                            return "Password length should be atleast 6";
+                          }
+
+                          return null;
+                        },
+                      ),
+                      SizedBox(
+                        height: 40.0,
+                      ),
+                      Material(
+                        color: kPrimaryColor,
+                        borderRadius:
+                            BorderRadius.circular(changeButton ? 50 : 8),
+                        child: InkWell(
+                          onTap: () => moveToHome(context),
+                          child: AnimatedContainer(
+                            duration: Duration(seconds: 1),
+                            width: changeButton ? 50 : 150,
+                            height: 50,
+                            alignment: Alignment.center,
+                            child: changeButton
+                                ? Icon(
+                                    Icons.done,
+                                    color: Colors.white,
+                                  )
+                                : Text(
+                                    "Login",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18),
+                                  ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }

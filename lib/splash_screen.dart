@@ -1,56 +1,105 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:project/home_page.dart';
-
+import 'package:project/constants.dart';
+import 'package:project/login_page.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() {
-    return SplashScreen_State();
-  }
+  _SplashScreenState createState() => _SplashScreenState();
 }
-class SplashScreen_State extends State<SplashScreen> {
-  // Future<void> fetch_login() async
-  // {
-  //   SharedPreferences pref=await SharedPreferences.getInstance();
-  //   var email = pref.getString('email');
-  //
-  // }
+
+class _SplashScreenState extends State<SplashScreen>
+    with SingleTickerProviderStateMixin {
+  late Animation animation;
+  late AnimationController controller;
+
   @override
   void initState() {
     super.initState();
-    Timer(
-        Duration(seconds: 2),
-        () => Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (BuildContext context) => HomePage())));
+
+    controller =
+        AnimationController(duration: Duration(seconds: 3), vsync: this);
+    animation = Tween(begin: 200.0, end: 400.0).animate(controller);
+    controller.forward();
+    startTimmer();
+  }
+
+  startTimmer() {
+    Future.delayed(
+      Duration(seconds: 4),
+      () async {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => LoginPage(),
+          ),
+        );
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.amberAccent,
-      body: Center(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Image.asset(
-            "images/instagram.png",
-            height: 150,
-            width: 150,
-          ),
-          Text(
-            "e-shop",
-            style: TextStyle(
-                fontSize: 30, color: Colors.green, fontFamily: 'fontr'),
-          ),
-          CircularProgressIndicator(
-            color: Colors.green,
-          ),
-          LinearProgressIndicator(
-            color: Colors.green,
-          )
-        ],
-      )),
+    return Container(
+      child: Scaffold(
+        body: ListView(
+          children: <Widget>[
+            Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              color: Colors.white,
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(top: 100, bottom: 0.0),
+                          child: Text(
+                            'Welcome to',
+                            style: TextStyle(
+                              fontFamily: "Arial",
+                              color: kPrimaryColor,
+                              fontSize: 27,
+                            ),
+                          ),
+                        ),
+                        AnimatedBuilder(
+                          animation: animation,
+                          builder: (context, child) {
+                            return Container(
+                              height: animation.value,
+                              width: animation.value,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: ExactAssetImage('assets/newlogo.png'),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          bottom: 80.0, left: 40, right: 40),
+                      child: Container(
+                        alignment: Alignment.bottomCenter,
+                        child: LinearProgressIndicator(
+                          color: kPrimaryColor,
+                          backgroundColor: Colors.transparent,
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

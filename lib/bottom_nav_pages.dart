@@ -68,7 +68,7 @@ class Home_State extends State<Home> {
           IconButton(
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => LoginScreen()));
+                    MaterialPageRoute(builder: (context) => LoginPage()));
               },
               icon: Icon(Icons.account_circle_outlined, color: Colors.white)),
         ],
