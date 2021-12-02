@@ -1,11 +1,13 @@
 //import 'dart:html';
 
 import 'dart:convert';
-import 'package:project/home_page.dart';
+import 'package:project/constants.dart';
+
 import 'package:project/login_page.dart';
 import 'package:shimmer/shimmer.dart';
 
 //import 'package:dio/dio.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -77,71 +79,468 @@ class Home_State extends State<Home> {
       //extendBodyBehindAppBar: true,
       drawer: Drawer(
         elevation: 20,
-        child: ListView(
-          children: <Widget>[
+        child: Container(
+//          color:Colors.cyan[50],
+        
+          child: ListView(
+              children: <Widget>[
             Container(
-              alignment: Alignment.topLeft,
-              color: Colors.deepPurpleAccent,
-              width: double.infinity,
-              padding: EdgeInsets.all(10),
-              child: Column(
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(top: 5, bottom: 5),
-                    width: 80,
-                    height: 80,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                        image: NetworkImage(
-                          "https://yt3.ggpht.com/yti/APfAmoGG2wndeEtxJjmmLb8mEMocL6jMcmQdspdq5LiaeQ=s108-c-k-c0x00ffffff-no-rj",
-                        ),
-                      ),
+                height: 100,
+                alignment: Alignment.topLeft,
+                
+                width: double.infinity,
+                padding: EdgeInsets.all(10),
+                child: Column(
+                  children: [
+                    Container(
+                        padding: EdgeInsets.only(top: 5, bottom: 5),
+                        margin: EdgeInsets.only(top: 5, bottom: 5),
+                        child: Image.asset(
+                          'images/IBMlogo.png',
+                          height: 60,
+                        )),
+                  ],
+                )),
+            Divider(),
+            Container(
+              margin:EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color:Colors.cyan[100],
+              ),
+              child: ListTile(
+                leading: Icon(Icons.dashboard_outlined),
+                title: Text("DASHBOARD",
+                    style: TextStyle(fontSize: 15, color: Colors.black)),
+                onTap: () {
+                  Navigator.push(context,MaterialPageRoute(builder: (context)=>LoginPage()));
+                },
+              ),
+            ),
+                Container(
+                  margin:EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color:Colors.cyan[100],
+                  ),
+                  child: ListTile(
+                    leading: Icon(Icons.add_moderator_outlined),
+                    title: Text("ADMIN",
+                        style: TextStyle(fontSize: 15, color: Colors.black)),
+                    onTap: () {
+                      Navigator.push(context,MaterialPageRoute(builder: (context)=>LoginPage()));
+                    },
+                  ),
+                ),
+            Container(
+              margin:EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color:Colors.cyan[100],
+              ),
+              child: ExpansionTile(
+                backgroundColor: Colors.blue[100],
+                onExpansionChanged: (val)
+                {
+
+                },
+                textColor: Colors.black,
+                leading: Icon(Icons.admin_panel_settings_outlined),
+                title: Text(
+                  "ADMIN SECTION",
+                  style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w500),
+                ),
+                children: <Widget>[
+                  ListTile(
+                    title: Text(
+                      "ADMIN SECTION 1",
+                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
                     ),
                   ),
-                  Text(
-                    "zeel123@gmail.com",
-                    style: TextStyle(color: Colors.white, fontSize: 10),
+                  ListTile(
+                    title: Text(
+                      "ADMIN SECTION 2",
+                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
+                    ),
+                  )
+                ],
+              ),
+            ),
+                Container(
+                  margin:EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color:Colors.cyan[100],
                   ),
-                  Text(
-                    "Zeel Chauhan",
-                    style: TextStyle(color: Colors.white, fontSize: 15),
+                  child: ExpansionTile(
+                    backgroundColor: Colors.blue[100],
+                    textColor: Colors.black,
+                    leading: Icon(Icons.admin_panel_settings_outlined),
+                    title: Text(
+                      "ADMISSION",
+                      style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w500),
+                    ),
+                    children: <Widget>[
+                      ListTile(
+                        title: Text(
+                          "Student Registeration FORM",
+                          style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
+                        ),
+                        onTap: ()
+                        {
+                          Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>LoginPage()));
+                        },
+                      ),
+                      ListTile(
+                        title: Text(
+                          "PRE-ADMISSION FORM",
+                          style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
+                        ),
+                        onTap: ()
+                        {
+                          Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>LoginPage()));
+                        },
+                      ),
+                      ListTile(
+                        title: Text(
+                          "ADMISSION FORM",
+                          style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
+                        ),
+                        onTap: ()
+                        {
+                          Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>LoginPage()));
+                        },
+                      )
+                    ],
+                  ),
+                ),
+            Container(
+              margin:EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color:Colors.cyan[100],
+              ),
+              child: ExpansionTile(
+                backgroundColor: Colors.blue[100],
+                textColor: Colors.black,
+                leading: Icon(Icons.info_outline),
+                title: Text(
+                  "STUDENT iNFO",
+                  style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w500),
+                ),
+                children: <Widget>[
+                  ListTile(
+                    title: Text(
+                      "STUDENT CATEGORY",
+                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
+                    ),
+                  ),
+                  ListTile(
+                    title: Text(
+                      "ADD STUDENT",
+                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
+                    ),
+                  ),
+                  ListTile(
+                    title: Text(
+                      "STUDENT LIST",
+                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
+                    ),
+                    onTap: ()
+                    {
+                      Navigator.push(context,MaterialPageRoute(builder: (context)=>LoginPage()));
+                    },
+                  ),
+                  ListTile(
+                    title: Text(
+                      "STUDENT ATTENDENCE",
+                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
+                    ),
+                  ),
+                  ListTile(
+                    title: Text(
+                      "STUDENT ATTENDENCE REPORT",
+                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
+                    ),
+                  ),
+                  ListTile(
+                    title: Text(
+                      "STUDENT WISE ATTENDANCE",
+                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
+                    ),
+                  ),
+                  ListTile(
+                    title: Text(
+                      "STUDENT GROUP",
+                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
+                    ),
+                  ),
+                  ListTile(
+                    title: Text(
+                      "STUDENT PROMOTE",
+                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
+                    ),
                   ),
                 ],
               ),
             ),
             Container(
-                child: SingleChildScrollView(
-              child: Column(
-                children: [
+              margin:EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color:Colors.cyan[100],
+              ),
+              child: ExpansionTile(
+                backgroundColor: Colors.blue[100],
+                textColor: Colors.black,
+                leading: Icon(Icons.cast_for_education_outlined),
+                title: Text(
+                  "ACADEMICS ",
+                  style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w500),
+                ),
+                children: <Widget>[
                   ListTile(
-                    leading: Icon(Icons.home),
                     title: Text(
-                      "Home",
-                      style: TextStyle(fontSize: 15),
+                      "Select Course",
+                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
                     ),
-                    onTap: () {
-                      Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (context) => HomePage()));
-                    },
                   ),
                   ListTile(
-                    leading: Icon(Icons.shop),
                     title: Text(
-                      "Shop",
-                      style: TextStyle(fontSize: 15),
+                      "ADMIN Academic 2",
+                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
                     ),
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Shop()));
-                    },
-                  ),
+                  )
                 ],
               ),
-            ))
-          ],
-        ),
-      ),
+            ),
+            Container(
+              margin:EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color:Colors.cyan[100],
+              ),
+              child: ExpansionTile(
+                backgroundColor: Colors.blue[100],
+                textColor: Colors.black,
+                leading: Icon(Icons.upload_outlined),
+                title: Text(
+                  "UPLOAD",
+                  style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w500),
+                ),
+                children: <Widget>[
+                  ListTile(
+                    title: Text(
+                      "Student Document",
+                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
+                    ),
+                  ),
+                  ListTile(
+                    title: Text(
+                      "Result ",
+                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Container(
+              margin:EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color:Colors.cyan[100],
+              ),
+              child: ExpansionTile(
+                backgroundColor: Colors.blue[100],
+                textColor: Colors.black,
+                leading: Icon(Icons.payment_outlined),
+                title: Text(
+                  "FEES COLLECTION",
+                  style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w500),
+                ),
+                children: <Widget>[
+                  ListTile(
+                    title: Text(
+                      "Student Fees",
+                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
+                    ),
+                  ),
+                  ListTile(
+                    title: Text(
+                      "Paid Fees Student",
+                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Container(
+              margin:EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color:Colors.cyan[100],
+              ),
+              child: ExpansionTile(
+                backgroundColor: Colors.blue[100],
+                textColor: Colors.black,
+                leading: Icon(Icons.account_circle_outlined),
+                title: Text(
+                  "ACCOUNTS",
+                  style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w500),
+                ),
+                children: <Widget>[
+                  ListTile(
+                    title: Text(
+                      "ADMIN Account 1",
+                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
+                    ),
+                  ),
+                  ListTile(
+                    title: Text(
+                      "ADMIN Account 2",
+                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Container(
+              margin:EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color:Colors.cyan[100],
+              ),
+              child: ExpansionTile(
+                backgroundColor: Colors.blue[100],
+                textColor: Colors.black,
+                leading: Icon(Icons.storage_outlined),
+                title: Text(
+                  "HUMAN RESOURCES",
+                  style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w500),
+                ),
+                children: <Widget>[
+                  ListTile(
+                    title: Text(
+                      "HR 1",
+                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
+                    ),
+                  ),
+                  ListTile(
+                    title: Text(
+                      "HR 2",
+                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Container(
+              margin:EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color:Colors.cyan[100],
+              ),
+              child: ExpansionTile(
+                backgroundColor: Colors.blue[100],
+                textColor: Colors.black,
+                leading: Icon(Icons.leave_bags_at_home_outlined),
+                title: Text(
+                  "LEAVE",
+                  style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w500),
+                ),
+                children: <Widget>[
+                  ListTile(
+                    title: Text(
+                      "Student Leave Details",
+                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
+                    ),
+                  ),
+                  ListTile(
+                    title: Text(
+                      "Max Leave of Student",
+                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Container(
+              margin:EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color:Colors.cyan[100],
+              ),
+              child: ExpansionTile(
+                backgroundColor: Colors.blue[100],
+                textColor: Colors.black,
+                leading: Icon(Icons.account_balance_outlined),
+                title: Text(
+                  "EXAMINATION",
+                  style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w500),
+                ),
+                children: <Widget>[
+                  ListTile(
+                    title: Text(
+                      "Student Exam",
+                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
+                    ),
+                  ),
+                  ListTile(
+                    title: Text(
+                      "Exam Result",
+                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Container(
+              margin:EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color:Colors.cyan[100],
+              ),
+              child: ExpansionTile(
+                backgroundColor: Colors.blue[100],
+                textColor: Colors.black,
+                leading: Icon(Icons.home_work_outlined),
+                title: Text(
+                  "HOMEWORK",
+                  style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w500),
+                ),
+                children: <Widget>[
+                  ListTile(
+                    title: Text(
+                      "ADMIN SECTION 1",
+                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
+                    ),
+                  ),
+                  ListTile(
+                    title: Text(
+                      "ADMIN SECTION 2",
+                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
+                    ),
+                  )
+                ],
+              ),
+            ),
+                Container(
+                  margin:EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color:Colors.cyan[100],
+                  ),
+                  child: ListTile(
+                    leading: Icon(Icons.login_outlined),
+                    title: Text("LOGOUT",
+                        style: TextStyle(fontSize: 15, color: Colors.black)),
+                    onTap: () {
+                      //Navigator.push(context,MaterialPageRoute(builder: (context)=>Admin_Page()));
+                    },
+                  ),
+                ),
+          ]),
+        )),
       body: ListView(
         padding: EdgeInsets.all(4),
         scrollDirection: Axis.vertical,
