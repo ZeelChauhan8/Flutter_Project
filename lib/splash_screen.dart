@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:project/constants.dart';
 import 'package:project/login_page.dart';
@@ -73,7 +72,8 @@ class _SplashScreenState extends State<SplashScreen>
                               width: animation.value,
                               decoration: BoxDecoration(
                                 image: DecorationImage(
-                                  image: ExactAssetImage('assets/newlogo.png'),
+                                  image: ExactAssetImage(
+                                      'assets/images/newlogo.png'),
                                 ),
                               ),
                             );

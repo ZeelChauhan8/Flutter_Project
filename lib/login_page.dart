@@ -36,14 +36,14 @@ class _LoginPageState extends State<LoginPage> {
         child: SingleChildScrollView(
           child: Form(
             key: _formKey,
-
             child: Padding(
               padding: const EdgeInsets.only(top: 84.0),
               child: Column(
                 children: [
                   Image.asset(
-                    "assets/logo.png",
+                    "assets/images/logo.png",
                     height: 200.0,
+                    
                     width: 300.0,
                   ),
                   SizedBox(
@@ -54,8 +54,7 @@ class _LoginPageState extends State<LoginPage> {
                     style: TextStyle(
                         fontSize: 28,
                         fontWeight: FontWeight.bold,
-                        color: kPrimaryColor
-                    ),
+                        color: kPrimaryColor),
                   ),
                   SizedBox(
                     height: 20.0,
@@ -87,14 +86,14 @@ class _LoginPageState extends State<LoginPage> {
                           decoration: InputDecoration(
                               hintText: "Enter password",
                               labelText: "Password",
-                              suffixIcon: IconButton(icon: Icon(Icons.lock),
-                                  onPressed: () {
-                                    setState(() {
-                                      password = !password;
-                                    });
-                                  },
-                                  )
-                          ),
+                              suffixIcon: IconButton(
+                                icon: Icon(Icons.lock),
+                                onPressed: () {
+                                  setState(() {
+                                    password = !password;
+                                  });
+                                },
+                              )),
                           validator: (value) {
                             if (value!.isEmpty) {
                               return "Password cannot be empty";
@@ -111,7 +110,7 @@ class _LoginPageState extends State<LoginPage> {
                         Material(
                           color: kPrimaryColor,
                           borderRadius:
-                          BorderRadius.circular(changeButton ? 50 : 8),
+                              BorderRadius.circular(changeButton ? 50 : 8),
                           child: InkWell(
                             onTap: () => moveToHome(context),
                             child: AnimatedContainer(
@@ -121,16 +120,16 @@ class _LoginPageState extends State<LoginPage> {
                               alignment: Alignment.center,
                               child: changeButton
                                   ? Icon(
-                                Icons.done,
-                                color: Colors.white,
-                              )
+                                      Icons.done,
+                                      color: Colors.white,
+                                    )
                                   : Text(
-                                "Login",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18),
-                              ),
+                                      "Login",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18),
+                                    ),
                             ),
                           ),
                         ),
