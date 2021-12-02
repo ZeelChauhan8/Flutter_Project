@@ -1,6 +1,7 @@
 //import 'dart:html';
 
 import 'dart:convert';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:project/constants.dart';
 
 import 'package:project/login_page.dart';
@@ -33,745 +34,414 @@ class Home_State extends State<Home> {
     });
   }
 
+  final Stream<QuerySnapshot> _sectionStream =
+      FirebaseFirestore.instance.collection("category").snapshots();
   @override
   Widget build(BuildContext context) {
     fetch_pro();
-    return Scaffold(
-      appBar: AppBar(
-        title: Center(
-          child: Text("Home Page", style: TextStyle(fontFamily: "fontr")),
-        ),
-        backgroundColor: Colors.deepPurple,
-        actions: <Widget>[
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Search()),
-              );
-            },
-            icon: Icon(
-              Icons.mic,
-              color: Colors.white,
-            ),
-          ),
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Search()),
-              );
-            },
-            icon: Icon(
-              Icons.search,
-              color: Colors.white,
-            ),
-          ),
-          IconButton(
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => LoginPage()));
-              },
-              icon: Icon(Icons.account_circle_outlined, color: Colors.white)),
-        ],
-      ),
-
-      //extendBodyBehindAppBar: true,
-      drawer: Drawer(
-        elevation: 20,
-        child: Container(
-//          color:Colors.cyan[50],
-        
-          child: ListView(
-              children: <Widget>[
-            Container(
-                height: 100,
-                alignment: Alignment.topLeft,
-                
-                width: double.infinity,
-                padding: EdgeInsets.all(10),
-                child: Column(
-                  children: [
-                    Container(
-                        padding: EdgeInsets.only(top: 5, bottom: 5),
-                        margin: EdgeInsets.only(top: 5, bottom: 5),
-                        child: Image.asset(
-                          'images/IBMlogo.png',
-                          height: 60,
-                        )),
-                  ],
-                )),
-            Divider(),
-            Container(
-              margin:EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color:Colors.cyan[100],
+    return StreamBuilder(
+        stream: _sectionStream,
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasError) {
+            return Text("Something went wrong !!!");
+          }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: Container(child: CircularProgressIndicator()));
+          }
+          return Scaffold(
+            appBar: AppBar(
+              title: Center(
+                child: Text("Home Page", style: TextStyle(fontFamily: "fontr")),
               ),
-              child: ListTile(
-                leading: Icon(Icons.dashboard_outlined),
-                title: Text("DASHBOARD",
-                    style: TextStyle(fontSize: 15, color: Colors.black)),
-                onTap: () {
-                  Navigator.push(context,MaterialPageRoute(builder: (context)=>LoginPage()));
-                },
-              ),
-            ),
-                Container(
-                  margin:EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color:Colors.cyan[100],
+              backgroundColor: Colors.deepPurple,
+              actions: <Widget>[
+                IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Search()),
+                    );
+                  },
+                  icon: Icon(
+                    Icons.mic,
+                    color: Colors.white,
                   ),
-                  child: ListTile(
-                    leading: Icon(Icons.add_moderator_outlined),
-                    title: Text("ADMIN",
-                        style: TextStyle(fontSize: 15, color: Colors.black)),
-                    onTap: () {
-                      Navigator.push(context,MaterialPageRoute(builder: (context)=>LoginPage()));
+                ),
+                IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Search()),
+                    );
+                  },
+                  icon: Icon(
+                    Icons.search,
+                    color: Colors.white,
+                  ),
+                ),
+                IconButton(
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => LoginPage()));
                     },
-                  ),
-                ),
-            Container(
-              margin:EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color:Colors.cyan[100],
-              ),
-              child: ExpansionTile(
-                backgroundColor: Colors.blue[100],
-                onExpansionChanged: (val)
-                {
-
-                },
-                textColor: Colors.black,
-                leading: Icon(Icons.admin_panel_settings_outlined),
-                title: Text(
-                  "ADMIN SECTION",
-                  style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w500),
-                ),
-                children: <Widget>[
-                  ListTile(
-                    title: Text(
-                      "ADMIN SECTION 1",
-                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
-                    ),
-                  ),
-                  ListTile(
-                    title: Text(
-                      "ADMIN SECTION 2",
-                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
-                    ),
-                  )
-                ],
-              ),
+                    icon: Icon(Icons.account_circle_outlined,
+                        color: Colors.white)),
+              ],
             ),
-                Container(
-                  margin:EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color:Colors.cyan[100],
-                  ),
-                  child: ExpansionTile(
-                    backgroundColor: Colors.blue[100],
-                    textColor: Colors.black,
-                    leading: Icon(Icons.admin_panel_settings_outlined),
-                    title: Text(
-                      "ADMISSION",
-                      style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w500),
+
+            //extendBodyBehindAppBar: true,
+            drawer: Drawer(
+                elevation: 20,
+                child: Container(
+//          color:Colors.cyan[50],
+
+                  child: ListView(children: <Widget>[
+                    Container(
+                        height: 100,
+                        alignment: Alignment.topLeft,
+                        width: double.infinity,
+                        padding: EdgeInsets.all(10),
+                        child: Column(
+                          children: [
+                            Container(
+                                padding: EdgeInsets.only(top: 0, bottom: 5),
+                                margin: EdgeInsets.only(top: 0, bottom: 5),
+                                child: Image.asset(
+                                  'assets/images/logo.png',
+                                  height: 80,
+                                  width: 200,
+                                )),
+                          ],
+                        )),
+                    Divider(),
+                    Container(
+                      margin: EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.cyan[100],
+                      ),
+                      child: ListTile(
+                        leading: Icon(Icons.dashboard_outlined),
+                        title: Text("DASHBOARD",
+                            style:
+                                TextStyle(fontSize: 15, color: Colors.black)),
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => LoginPage()));
+                        },
+                      ),
                     ),
-                    children: <Widget>[
-                      ListTile(
-                        title: Text(
-                          "Student Registeration FORM",
-                          style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
-                        ),
-                        onTap: ()
-                        {
-                          Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>LoginPage()));
+                    Container(
+                      margin: EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.cyan[100],
+                      ),
+                      child: ListTile(
+                        leading: Icon(Icons.add_moderator_outlined),
+                        title: Text("ADMIN",
+                            style:
+                                TextStyle(fontSize: 15, color: Colors.black)),
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => LoginPage()));
                         },
                       ),
-                      ListTile(
-                        title: Text(
-                          "PRE-ADMISSION FORM",
-                          style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
+                    ),
+                    for (int i = 0; i < snapshot.data!.size.toInt(); i++) ...[
+                      Container(
+                        margin: EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.cyan[100],
                         ),
-                        onTap: ()
-                        {
-                          Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>LoginPage()));
+                        child: ExpansionTile(
+                          backgroundColor: Colors.blue[100],
+                          onExpansionChanged: (val) {},
+                          textColor: Colors.black,
+                          leading: Icon(Icons.admin_panel_settings_outlined),
+                          title: Text(
+                            snapshot.data!.docs[i]['catname'].toString(),
+                            style: TextStyle(
+                                fontSize: 15.0, fontWeight: FontWeight.w500),
+                          ),
+                          children: <Widget>[
+                            ListTile(
+                              title: Text(
+                                "ADMIN SECTION 1",
+                                style: TextStyle(
+                                    fontSize: 13, fontWeight: FontWeight.w700),
+                              ),
+                            ),
+                            ListTile(
+                              title: Text(
+                                "ADMIN SECTION 2",
+                                style: TextStyle(
+                                    fontSize: 13, fontWeight: FontWeight.w700),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                    Container(
+                      margin: EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.cyan[100],
+                      ),
+                      child: ListTile(
+                        leading: Icon(Icons.login_outlined),
+                        title: Text("LOGOUT",
+                            style:
+                                TextStyle(fontSize: 15, color: Colors.black)),
+                        onTap: () {
+                          //Navigator.push(context,MaterialPageRoute(builder: (context)=>Admin_Page()));
                         },
                       ),
-                      ListTile(
-                        title: Text(
-                          "ADMISSION FORM",
-                          style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
-                        ),
-                        onTap: ()
-                        {
-                          Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>LoginPage()));
-                        },
-                      )
+                    ),
+                  ]),
+                )),
+            body: ListView(
+              padding: EdgeInsets.all(4),
+              scrollDirection: Axis.vertical,
+              children: <Widget>[
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  color: Colors.black12,
+                  height: 170.0,
+                  child: CarouselSlider(
+                    options: CarouselOptions(
+                      height: 200.0,
+                      viewportFraction: 0.8,
+                      autoPlay: true,
+                      autoPlayAnimationDuration: Duration(milliseconds: 800),
+                      autoPlayCurve: Curves.fastOutSlowIn,
+                      enlargeCenterPage: true,
+                    ),
+                    items: [
+                      Image.asset('images/slider/m1.jpeg', fit: BoxFit.fill),
+                      Image.asset('images/slider/m2.jpg', fit: BoxFit.fill),
+                      Image.asset('images/slider/3.jpg', fit: BoxFit.fill),
+                      Image.asset('images/slider/4.jpg', fit: BoxFit.fill),
+                      Image.asset('images/slider/5.jpg', fit: BoxFit.fill),
                     ],
                   ),
                 ),
-            Container(
-              margin:EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color:Colors.cyan[100],
-              ),
-              child: ExpansionTile(
-                backgroundColor: Colors.blue[100],
-                textColor: Colors.black,
-                leading: Icon(Icons.info_outline),
-                title: Text(
-                  "STUDENT iNFO",
-                  style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w500),
-                ),
-                children: <Widget>[
-                  ListTile(
-                    title: Text(
-                      "STUDENT CATEGORY",
-                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
-                    ),
-                  ),
-                  ListTile(
-                    title: Text(
-                      "ADD STUDENT",
-                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
-                    ),
-                  ),
-                  ListTile(
-                    title: Text(
-                      "STUDENT LIST",
-                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
-                    ),
-                    onTap: ()
-                    {
-                      Navigator.push(context,MaterialPageRoute(builder: (context)=>LoginPage()));
-                    },
-                  ),
-                  ListTile(
-                    title: Text(
-                      "STUDENT ATTENDENCE",
-                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
-                    ),
-                  ),
-                  ListTile(
-                    title: Text(
-                      "STUDENT ATTENDENCE REPORT",
-                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
-                    ),
-                  ),
-                  ListTile(
-                    title: Text(
-                      "STUDENT WISE ATTENDANCE",
-                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
-                    ),
-                  ),
-                  ListTile(
-                    title: Text(
-                      "STUDENT GROUP",
-                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
-                    ),
-                  ),
-                  ListTile(
-                    title: Text(
-                      "STUDENT PROMOTE",
-                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              margin:EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color:Colors.cyan[100],
-              ),
-              child: ExpansionTile(
-                backgroundColor: Colors.blue[100],
-                textColor: Colors.black,
-                leading: Icon(Icons.cast_for_education_outlined),
-                title: Text(
-                  "ACADEMICS ",
-                  style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w500),
-                ),
-                children: <Widget>[
-                  ListTile(
-                    title: Text(
-                      "Select Course",
-                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
-                    ),
-                  ),
-                  ListTile(
-                    title: Text(
-                      "ADMIN Academic 2",
-                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Container(
-              margin:EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color:Colors.cyan[100],
-              ),
-              child: ExpansionTile(
-                backgroundColor: Colors.blue[100],
-                textColor: Colors.black,
-                leading: Icon(Icons.upload_outlined),
-                title: Text(
-                  "UPLOAD",
-                  style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w500),
-                ),
-                children: <Widget>[
-                  ListTile(
-                    title: Text(
-                      "Student Document",
-                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
-                    ),
-                  ),
-                  ListTile(
-                    title: Text(
-                      "Result ",
-                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Container(
-              margin:EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color:Colors.cyan[100],
-              ),
-              child: ExpansionTile(
-                backgroundColor: Colors.blue[100],
-                textColor: Colors.black,
-                leading: Icon(Icons.payment_outlined),
-                title: Text(
-                  "FEES COLLECTION",
-                  style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w500),
-                ),
-                children: <Widget>[
-                  ListTile(
-                    title: Text(
-                      "Student Fees",
-                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
-                    ),
-                  ),
-                  ListTile(
-                    title: Text(
-                      "Paid Fees Student",
-                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Container(
-              margin:EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color:Colors.cyan[100],
-              ),
-              child: ExpansionTile(
-                backgroundColor: Colors.blue[100],
-                textColor: Colors.black,
-                leading: Icon(Icons.account_circle_outlined),
-                title: Text(
-                  "ACCOUNTS",
-                  style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w500),
-                ),
-                children: <Widget>[
-                  ListTile(
-                    title: Text(
-                      "ADMIN Account 1",
-                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
-                    ),
-                  ),
-                  ListTile(
-                    title: Text(
-                      "ADMIN Account 2",
-                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Container(
-              margin:EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color:Colors.cyan[100],
-              ),
-              child: ExpansionTile(
-                backgroundColor: Colors.blue[100],
-                textColor: Colors.black,
-                leading: Icon(Icons.storage_outlined),
-                title: Text(
-                  "HUMAN RESOURCES",
-                  style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w500),
-                ),
-                children: <Widget>[
-                  ListTile(
-                    title: Text(
-                      "HR 1",
-                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
-                    ),
-                  ),
-                  ListTile(
-                    title: Text(
-                      "HR 2",
-                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Container(
-              margin:EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color:Colors.cyan[100],
-              ),
-              child: ExpansionTile(
-                backgroundColor: Colors.blue[100],
-                textColor: Colors.black,
-                leading: Icon(Icons.leave_bags_at_home_outlined),
-                title: Text(
-                  "LEAVE",
-                  style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w500),
-                ),
-                children: <Widget>[
-                  ListTile(
-                    title: Text(
-                      "Student Leave Details",
-                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
-                    ),
-                  ),
-                  ListTile(
-                    title: Text(
-                      "Max Leave of Student",
-                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Container(
-              margin:EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color:Colors.cyan[100],
-              ),
-              child: ExpansionTile(
-                backgroundColor: Colors.blue[100],
-                textColor: Colors.black,
-                leading: Icon(Icons.account_balance_outlined),
-                title: Text(
-                  "EXAMINATION",
-                  style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w500),
-                ),
-                children: <Widget>[
-                  ListTile(
-                    title: Text(
-                      "Student Exam",
-                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
-                    ),
-                  ),
-                  ListTile(
-                    title: Text(
-                      "Exam Result",
-                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Container(
-              margin:EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color:Colors.cyan[100],
-              ),
-              child: ExpansionTile(
-                backgroundColor: Colors.blue[100],
-                textColor: Colors.black,
-                leading: Icon(Icons.home_work_outlined),
-                title: Text(
-                  "HOMEWORK",
-                  style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w500),
-                ),
-                children: <Widget>[
-                  ListTile(
-                    title: Text(
-                      "ADMIN SECTION 1",
-                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
-                    ),
-                  ),
-                  ListTile(
-                    title: Text(
-                      "ADMIN SECTION 2",
-                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
-                    ),
-                  )
-                ],
-              ),
-            ),
                 Container(
-                  margin:EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color:Colors.cyan[100],
-                  ),
-                  child: ListTile(
-                    leading: Icon(Icons.login_outlined),
-                    title: Text("LOGOUT",
-                        style: TextStyle(fontSize: 15, color: Colors.black)),
-                    onTap: () {
-                      //Navigator.push(context,MaterialPageRoute(builder: (context)=>Admin_Page()));
-                    },
+                  margin: EdgeInsets.only(top: 5),
+                  child: Text(
+                    "Category",
+                    style: TextStyle(
+                        color: Colors.deepPurple,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20),
                   ),
                 ),
-          ]),
-        )),
-      body: ListView(
-        padding: EdgeInsets.all(4),
-        scrollDirection: Axis.vertical,
-        children: <Widget>[
-          Container(
-            width: MediaQuery.of(context).size.width,
-            color: Colors.black12,
-            height: 170.0,
-            child: CarouselSlider(
-              options: CarouselOptions(
-                height: 200.0,
-                viewportFraction: 0.8,
-                autoPlay: true,
-                autoPlayAnimationDuration: Duration(milliseconds: 800),
-                autoPlayCurve: Curves.fastOutSlowIn,
-                enlargeCenterPage: true,
-              ),
-              items: [
-                Image.asset('images/slider/m1.jpeg', fit: BoxFit.fill),
-                Image.asset('images/slider/m2.jpg', fit: BoxFit.fill),
-                Image.asset('images/slider/3.jpg', fit: BoxFit.fill),
-                Image.asset('images/slider/4.jpg', fit: BoxFit.fill),
-                Image.asset('images/slider/5.jpg', fit: BoxFit.fill),
+                Container(
+                    color: Colors.black12,
+                    height: 200,
+                    margin: EdgeInsets.only(top: 5),
+                    child: ListView(
+                      shrinkWrap: false,
+                      scrollDirection: Axis.horizontal,
+                      children: [
+                        Container(
+                            height: 200,
+                            width: 150,
+                            color: Colors.black12,
+                            margin: EdgeInsets.all(10),
+                            child: Column(
+                              children: [
+                                Image.asset(
+                                  'images/category/phone.jpg',
+                                  height: 150,
+                                  width: 90,
+                                ),
+                                Text("Phone",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20)),
+                              ],
+                            )),
+                        Container(
+                            height: 200,
+                            width: 150,
+                            color: Colors.black12,
+                            margin: EdgeInsets.all(10),
+                            child: Column(
+                              children: [
+                                Image.asset(
+                                  'images/category/shirt.jpg',
+                                  height: 150,
+                                  width: 90,
+                                ),
+                                Text("Shirt",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20)),
+                              ],
+                            )),
+                        Container(
+                            height: 200,
+                            width: 150,
+                            color: Colors.black12,
+                            margin: EdgeInsets.all(10),
+                            child: Column(
+                              children: [
+                                Image.asset(
+                                  'images/category/tshirt.jpg',
+                                  height: 150,
+                                  width: 90,
+                                ),
+                                Text("T-Shirt",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20)),
+                              ],
+                            )),
+                        Container(
+                            height: 200,
+                            width: 150,
+                            color: Colors.black12,
+                            margin: EdgeInsets.all(10),
+                            child: Column(
+                              children: [
+                                Image.asset(
+                                  'images/category/woman.jpg',
+                                  height: 150,
+                                  width: 90,
+                                ),
+                                Text("Women T-Shirt",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20)),
+                              ],
+                            )),
+                      ],
+                    )),
+                Container(
+                  color: Colors.white,
+                  width: MediaQuery.of(context).size.width,
+                  margin: EdgeInsets.only(top: 5),
+                  child: Text(
+                    "New Products",
+                    style: TextStyle(
+                        color: Colors.green,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 5),
+                  child: (_product.length > 0)
+                      ? GridView.builder(
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisSpacing: 5,
+                            mainAxisSpacing: 5,
+                            crossAxisCount: 3,
+                          ),
+                          physics:
+                              NeverScrollableScrollPhysics(), // to disable GridView's scrolling
+                          shrinkWrap: true,
+                          itemCount: _product.length,
+                          itemBuilder: (context, index) {
+                            String img = _product[index]['img'];
+                            return Container(
+                              color: Colors.lightGreenAccent,
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => SilverScreen(
+                                              _product[index]['name'],
+                                              _product[index]['img'])));
+                                },
+                                child: Column(
+                                  children: [
+                                    Image.asset('$img', height: 100, width: 70),
+                                    Text(
+                                      _product[index]['name'],
+                                      style: TextStyle(
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    //Text(_product[index]['Price'],style: TextStyle(fontSize: 13,fontWeight: FontWeight.bold),),
+                                  ],
+                                ),
+                              ),
+                            );
+                          })
+                      : Text("Loading ... Please Wait !!"),
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 5),
+                  child: Text(
+                    "Latest Products",
+                    style: TextStyle(
+                        color: Colors.green,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20),
+                  ),
+                ),
+                Container(
+                  height: 140,
+                  margin: EdgeInsets.only(top: 5),
+                  child: _product.length > 0
+                      ? ListView.builder(
+                          shrinkWrap: false,
+                          scrollDirection: Axis.horizontal,
+                          itemCount: _product.length,
+                          itemBuilder: (context, int index) {
+                            String img = _product[index]['img'];
+                            return Container(
+                                padding: EdgeInsets.all(5),
+                                color: Colors.lightGreenAccent,
+                                height: 140,
+                                width: 300,
+                                margin: EdgeInsets.all(10),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Image.asset(
+                                      '$img',
+                                      height: 150,
+                                      fit: BoxFit.fill,
+                                    ),
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(_product[index]['name']),
+                                        Text(_product[index]['Price']),
+                                        Text(_product[index]['RAM'] +
+                                            " + " +
+                                            _product[index]['ROM']),
+                                      ],
+                                    )
+                                  ],
+                                ));
+                          },
+                        )
+                      : Text("Please Wait!!  Loading..."),
+                )
               ],
             ),
-          ),
-          Container(
-            margin: EdgeInsets.only(top: 5),
-            child: Text(
-              "Category",
-              style: TextStyle(
-                  color: Colors.deepPurple,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20),
-            ),
-          ),
-          Container(
-              color: Colors.black12,
-              height: 200,
-              margin: EdgeInsets.only(top: 5),
-              child: ListView(
-                shrinkWrap: false,
-                scrollDirection: Axis.horizontal,
-                children: [
-                  Container(
-                      height: 200,
-                      width: 150,
-                      color: Colors.black12,
-                      margin: EdgeInsets.all(10),
-                      child: Column(
-                        children: [
-                          Image.asset(
-                            'images/category/phone.jpg',
-                            height: 150,
-                            width: 90,
-                          ),
-                          Text("Phone",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20)),
-                        ],
-                      )),
-                  Container(
-                      height: 200,
-                      width: 150,
-                      color: Colors.black12,
-                      margin: EdgeInsets.all(10),
-                      child: Column(
-                        children: [
-                          Image.asset(
-                            'images/category/shirt.jpg',
-                            height: 150,
-                            width: 90,
-                          ),
-                          Text("Shirt",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20)),
-                        ],
-                      )),
-                  Container(
-                      height: 200,
-                      width: 150,
-                      color: Colors.black12,
-                      margin: EdgeInsets.all(10),
-                      child: Column(
-                        children: [
-                          Image.asset(
-                            'images/category/tshirt.jpg',
-                            height: 150,
-                            width: 90,
-                          ),
-                          Text("T-Shirt",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20)),
-                        ],
-                      )),
-                  Container(
-                      height: 200,
-                      width: 150,
-                      color: Colors.black12,
-                      margin: EdgeInsets.all(10),
-                      child: Column(
-                        children: [
-                          Image.asset(
-                            'images/category/woman.jpg',
-                            height: 150,
-                            width: 90,
-                          ),
-                          Text("Women T-Shirt",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20)),
-                        ],
-                      )),
-                ],
-              )),
-          Container(
-            color: Colors.white,
-            width: MediaQuery.of(context).size.width,
-            margin: EdgeInsets.only(top: 5),
-            child: Text(
-              "New Products",
-              style: TextStyle(
-                  color: Colors.green,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(top: 5),
-            child: (_product.length > 0)
-                ? GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisSpacing: 5,
-                      mainAxisSpacing: 5,
-                      crossAxisCount: 3,
-                    ),
-                    physics:
-                        NeverScrollableScrollPhysics(), // to disable GridView's scrolling
-                    shrinkWrap: true,
-                    itemCount: _product.length,
-                    itemBuilder: (context, index) {
-                      String img = _product[index]['img'];
-                      return Container(
-                        color: Colors.lightGreenAccent,
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SilverScreen(
-                                        _product[index]['name'],
-                                        _product[index]['img'])));
-                          },
-                          child: Column(
-                            children: [
-                              Image.asset('$img', height: 100, width: 70),
-                              Text(
-                                _product[index]['name'],
-                                style: TextStyle(
-                                    fontSize: 13, fontWeight: FontWeight.bold),
-                              ),
-                              //Text(_product[index]['Price'],style: TextStyle(fontSize: 13,fontWeight: FontWeight.bold),),
-                            ],
-                          ),
-                        ),
-                      );
-                    })
-                : Text("Loading ... Please Wait !!"),
-          ),
-          Container(
-            margin: EdgeInsets.only(top: 5),
-            child: Text(
-              "Latest Products",
-              style: TextStyle(
-                  color: Colors.green,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20),
-            ),
-          ),
-          Container(
-            height: 140,
-            margin: EdgeInsets.only(top: 5),
-            child: _product.length > 0
-                ? ListView.builder(
-                    shrinkWrap: false,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: _product.length,
-                    itemBuilder: (context, int index) {
-                      String img = _product[index]['img'];
-                      return Container(
-                          padding: EdgeInsets.all(5),
-                          color: Colors.lightGreenAccent,
-                          height: 140,
-                          width: 300,
-                          margin: EdgeInsets.all(10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Image.asset(
-                                '$img',
-                                height: 150,
-                                fit: BoxFit.fill,
-                              ),
-                              Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(_product[index]['name']),
-                                  Text(_product[index]['Price']),
-                                  Text(_product[index]['RAM'] +
-                                      " + " +
-                                      _product[index]['ROM']),
-                                ],
-                              )
-                            ],
-                          ));
-                    },
-                  )
-                : Text("Please Wait!!  Loading..."),
-          )
-        ],
-      ),
-    );
+          );
+        });
   }
 }
 

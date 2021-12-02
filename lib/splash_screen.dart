@@ -25,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen>
 
   startTimmer() {
     Future.delayed(
-      Duration(seconds: 4),
+      Duration(microseconds: 20),
       () async {
         Navigator.pushReplacement(
           context,
