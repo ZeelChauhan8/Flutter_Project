@@ -81,7 +81,7 @@ class Home_State extends State<Home> {
           children: <Widget>[
             Container(
               alignment: Alignment.topLeft,
-              color: Colors.lightGreenAccent,
+              color: Colors.deepPurpleAccent,
               width: double.infinity,
               padding: EdgeInsets.all(10),
               child: Column(
@@ -173,7 +173,7 @@ class Home_State extends State<Home> {
             child: Text(
               "Category",
               style: TextStyle(
-                  color: Colors.green,
+                  color: Colors.deepPurple,
                   fontWeight: FontWeight.bold,
                   fontSize: 20),
             ),

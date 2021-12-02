@@ -21,7 +21,7 @@ class HomePage_State extends State<HomePage> {
       ),
       bottomNavigationBar: ConvexAppBar(
         //type: BottomNavigationBarType.shifting,
-        backgroundColor: Colors.lightGreen,
+        backgroundColor: Colors.deepPurple,
         activeColor: Colors.white,
         style: TabStyle.reactCircle,
         //selectedItemColor: Colors.red,

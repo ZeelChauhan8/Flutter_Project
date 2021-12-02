@@ -2,13 +2,13 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:project/home_page.dart';
 
-
 class SplashScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     return SplashScreen_State();
   }
 }
+
 class SplashScreen_State extends State<SplashScreen> {
   // Future<void> fetch_login() async
   // {
@@ -28,7 +28,7 @@ class SplashScreen_State extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.amberAccent,
+      backgroundColor: Colors.white,
       body: Center(
           child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -41,13 +41,13 @@ class SplashScreen_State extends State<SplashScreen> {
           Text(
             "e-shop",
             style: TextStyle(
-                fontSize: 30, color: Colors.green, fontFamily: 'fontr'),
+                fontSize: 30, color: Colors.deepPurple, fontFamily: 'fontr'),
           ),
           CircularProgressIndicator(
-            color: Colors.green,
+            color: Colors.deepPurple,
           ),
           LinearProgressIndicator(
-            color: Colors.green,
+            color: Colors.deepPurple,
           )
         ],
       )),
