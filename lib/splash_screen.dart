@@ -36,7 +36,7 @@ class _SplashScreenState extends State<SplashScreen>
       },
     );
   }
-//new splash_screen
+
   @override
   Widget build(BuildContext context) {
     return Container(
