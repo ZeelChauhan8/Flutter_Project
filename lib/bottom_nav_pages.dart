@@ -36,6 +36,7 @@ class Home_State extends State<Home> {
 
   final Stream<QuerySnapshot> _sectionStream =
       FirebaseFirestore.instance.collection("category").snapshots();
+
   @override
   Widget build(BuildContext context) {
     fetch_pro();
@@ -170,20 +171,34 @@ class Home_State extends State<Home> {
                                 fontSize: 15.0, fontWeight: FontWeight.w500),
                           ),
                           children: <Widget>[
-                            ListTile(
-                              title: Text(
-                                "ADMIN SECTION 1",
-                                style: TextStyle(
-                                    fontSize: 13, fontWeight: FontWeight.w700),
-                              ),
-                            ),
-                            ListTile(
-                              title: Text(
-                                "ADMIN SECTION 2",
-                                style: TextStyle(
-                                    fontSize: 13, fontWeight: FontWeight.w700),
-                              ),
-                            )
+                            StreamBuilder(
+                                stream: FirebaseFirestore.instance
+                                    .collection("subcate")
+                                    .where('catname', isEqualTo: 'clothes')
+                                    .limit(1)
+                                    .snapshots(),
+                                builder: (BuildContext context,
+                                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                                  if (snapshot.hasError) {
+                                    return Text("Something went wrong !!!");
+                                  }
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.waiting) {
+                                    return Center(
+                                        child: Container(
+                                            child:
+                                                CircularProgressIndicator()));
+                                  }
+                                  return ListTile(
+                                    title: Text(
+                                      snapshot.data!.docs[0]['subcat']
+                                          .toString(),
+                                      style: TextStyle(
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                  );
+                                }),
                           ],
                         ),
                       ),
