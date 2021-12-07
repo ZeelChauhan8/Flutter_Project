@@ -43,7 +43,6 @@ class _LoginPageState extends State<LoginPage> {
                   Image.asset(
                     "assets/images/logo.png",
                     height: 200.0,
-                    
                     width: 300.0,
                   ),
                   SizedBox(
@@ -68,6 +67,7 @@ class _LoginPageState extends State<LoginPage> {
                           decoration: InputDecoration(
                             hintText: "Enter username",
                             labelText: "Username",
+                            suffixIcon: Icon(Icons.supervised_user_circle),
                           ),
                           validator: (value) {
                             if (value!.isEmpty) {

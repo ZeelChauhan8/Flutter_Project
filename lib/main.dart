@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:project/bottom_nav_pages.dart';
 import 'package:project/splash_screen.dart';
 
 Future<void> main() async {
@@ -10,7 +11,7 @@ Future<void> main() async {
     MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "eshop",
-      home: SplashScreen(),
+      home: Home(),
     ),
   );
 }

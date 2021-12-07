@@ -47,7 +47,12 @@ class Home_State extends State<Home> {
             return Text("Something went wrong !!!");
           }
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: Container(child: CircularProgressIndicator()));
+            return Center(
+              child: new CircularProgressIndicator(
+                backgroundColor: kPrimaryColor,
+                color: Colors.white,
+              ),
+            );
           }
           return Scaffold(
             appBar: AppBar(
@@ -94,132 +99,136 @@ class Home_State extends State<Home> {
             drawer: Drawer(
                 elevation: 20,
                 child: Container(
-//          color:Colors.cyan[50],
-
-                  child: ListView(children: <Widget>[
-                    Container(
-                        height: 100,
-                        alignment: Alignment.topLeft,
-                        width: double.infinity,
-                        padding: EdgeInsets.all(10),
-                        child: Column(
-                          children: [
-                            Container(
-                                padding: EdgeInsets.only(top: 0, bottom: 5),
-                                margin: EdgeInsets.only(top: 0, bottom: 5),
-                                child: Image.asset(
-                                  'assets/images/logo.png',
-                                  height: 80,
-                                  width: 200,
-                                )),
-                          ],
-                        )),
-                    Divider(),
-                    Container(
-                      margin: EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.cyan[100],
-                      ),
-                      child: ListTile(
-                        leading: Icon(Icons.dashboard_outlined),
-                        title: Text("DASHBOARD",
-                            style:
-                                TextStyle(fontSize: 15, color: Colors.black)),
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => LoginPage()));
-                        },
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.cyan[100],
-                      ),
-                      child: ListTile(
-                        leading: Icon(Icons.add_moderator_outlined),
-                        title: Text("ADMIN",
-                            style:
-                                TextStyle(fontSize: 15, color: Colors.black)),
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => LoginPage()));
-                        },
-                      ),
-                    ),
-                    for (int i = 0; i < snapshot.data!.size.toInt(); i++) ...[
-                      Container(
-                        margin: EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.cyan[100],
-                        ),
-                        child: ExpansionTile(
-                          backgroundColor: Colors.blue[100],
-                          onExpansionChanged: (val) {},
-                          textColor: Colors.black,
-                          leading: Icon(Icons.admin_panel_settings_outlined),
-                          title: Text(
-                            snapshot.data!.docs[i]['catname'].toString(),
-                            style: TextStyle(
-                                fontSize: 15.0, fontWeight: FontWeight.w500),
+                  color: kPrimaryColor.withOpacity(0.5),
+                  child: ListView(
+                      //shrinkWrap: true,
+                      physics: BouncingScrollPhysics(),
+                      children: <Widget>[
+                        Container(
+                            height: 100,
+                            alignment: Alignment.topLeft,
+                            width: double.infinity,
+                            padding: EdgeInsets.all(10),
+                            child: Column(
+                              children: [
+                                Container(
+                                    padding: EdgeInsets.only(top: 0, bottom: 5),
+                                    margin: EdgeInsets.only(top: 0, bottom: 5),
+                                    child: Image.asset(
+                                      'assets/images/logo.png',
+                                      height: 60,
+                                      width: 200,
+                                    )),
+                              ],
+                            )),
+                        Divider(),
+                        Container(
+                          margin: EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.cyan[100],
                           ),
-                          children: <Widget>[
-                            StreamBuilder(
-                                stream: FirebaseFirestore.instance
-                                    .collection("subcate")
-                                    .where('catname', isEqualTo: 'clothes')
-                                    .limit(1)
-                                    .snapshots(),
-                                builder: (BuildContext context,
-                                    AsyncSnapshot<QuerySnapshot> snapshot) {
-                                  if (snapshot.hasError) {
-                                    return Text("Something went wrong !!!");
-                                  }
-                                  if (snapshot.connectionState ==
-                                      ConnectionState.waiting) {
-                                    return Center(
-                                        child: Container(
-                                            child:
-                                                CircularProgressIndicator()));
-                                  }
-                                  return ListTile(
-                                    title: Text(
-                                      snapshot.data!.docs[0]['subcat']
-                                          .toString(),
-                                      style: TextStyle(
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.w700),
-                                    ),
-                                  );
-                                }),
-                          ],
+                          child: ListTile(
+                            leading: Icon(Icons.dashboard_outlined),
+                            title: Text("DASHBOARD",
+                                style: TextStyle(
+                                    fontSize: 15, color: Colors.black)),
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => LoginPage()));
+                            },
+                          ),
                         ),
-                      ),
-                    ],
-                    Container(
-                      margin: EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.cyan[100],
-                      ),
-                      child: ListTile(
-                        leading: Icon(Icons.login_outlined),
-                        title: Text("LOGOUT",
-                            style:
-                                TextStyle(fontSize: 15, color: Colors.black)),
-                        onTap: () {
-                          //Navigator.push(context,MaterialPageRoute(builder: (context)=>Admin_Page()));
-                        },
-                      ),
-                    ),
-                  ]),
+                        Container(
+                          margin: EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.cyan[100],
+                          ),
+                          child: ListTile(
+                            leading: Icon(Icons.add_moderator_outlined),
+                            title: Text("ADMIN",
+                                style: TextStyle(
+                                    fontSize: 15, color: Colors.black)),
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => LoginPage()));
+                            },
+                          ),
+                        ),
+                        for (int i = 0;
+                            i < snapshot.data!.size.toInt();
+                            i++) ...[
+                          Container(
+                            margin: EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.cyan[100],
+                            ),
+                            child: ExpansionTile(
+                              backgroundColor: Colors.blue[100],
+                              onExpansionChanged: (val) {},
+                              textColor: Colors.black,
+                              leading:
+                                  Icon(Icons.admin_panel_settings_outlined),
+                              title: Text(
+                                snapshot.data!.docs[i]['catname'].toString(),
+                                style: TextStyle(
+                                    fontSize: 15.0,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                              children: <Widget>[
+                                StreamBuilder(
+                                    stream: FirebaseFirestore.instance
+                                        .collection("category")
+                                        .snapshots(),
+                                    builder: (BuildContext context,
+                                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                                      if (snapshot.hasError) {
+                                        return Text("Something went wrong !!!");
+                                      }
+                                      if (snapshot.connectionState ==
+                                          ConnectionState.waiting) {
+                                        return Center(
+                                            child: Container(
+                                                child:
+                                                    CircularProgressIndicator()));
+                                      }
+                                      return ListTile(
+                                        title: Text(
+                                          snapshot.data!.docs[0]['subcat']
+                                              .toString(),
+                                          style: TextStyle(
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w700),
+                                        ),
+                                      );
+                                    }),
+                              ],
+                            ),
+                          ),
+                        ],
+                        Container(
+                          margin: EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.cyan[100],
+                          ),
+                          child: ListTile(
+                            leading: Icon(Icons.login_outlined),
+                            title: Text("LOGOUT",
+                                style: TextStyle(
+                                    fontSize: 15, color: Colors.black)),
+                            onTap: () {
+                              //Navigator.push(context,MaterialPageRoute(builder: (context)=>Admin_Page()));
+                            },
+                          ),
+                        ),
+                      ]),
                 )),
             body: ListView(
               padding: EdgeInsets.all(4),
