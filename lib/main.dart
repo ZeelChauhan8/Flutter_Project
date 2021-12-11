@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:project/bottom_nav_pages.dart';
-import 'package:project/splash_screen.dart';
+import 'package:project/home_page.dart';
 
 Future<void> main() async {
 //  WidgetsFlutterBinding.ensureInitialized();
